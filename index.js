@@ -14,13 +14,17 @@ app.use(compression());
 
 app.use(cors());
 
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+// var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 // setup the logger
-app.use(morgan('combined', { stream: accessLogStream }))
+app.use(morgan('combined'))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.get('/healthy', (req, res) => {
+  res.send();
+})
 
 app.get('/loaderio-*', (req, res) => {
   res.status(200).send(process.env.LOADERIO)
