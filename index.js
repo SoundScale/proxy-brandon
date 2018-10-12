@@ -30,7 +30,8 @@ app.get('/:id', (req, res) => {
 })
 
 app.get('/api/waveformplayer/:id', (req, res) => {
-  axios(`http://18.219.124.16/api/waveformplayer/${req.params.id}`)
+  axios(`http://sdclb-2122289528.us-west-1.elb.amazonaws.com/api/waveformplayer/${req.params.id}`)
+  // axios(`http://18.219.124.16/api/waveformplayer/${req.params.id}`)
     .then(function (response) {
       res.send(response.data)
     })
@@ -87,7 +88,8 @@ app.patch('/api/stats/:id', (req, res) => {
 
 app.get('/api/comments/:id', (req, res) => {
   // console.log(`http:/localhost:3001/api/${req.params.songid}`);
-  axios.get(`http://comments-server.2u82f9p8mx.us-east-2.elasticbeanstalk.com/api/comments/${req.params.id}`)
+  // axios.get(`http://comments-server.2u82f9p8mx.us-east-2.elasticbeanstalk.com/api/comments/${req.params.id}`)
+  axios.get(`http://soundscale-comments-lb-513047902.us-west-1.elb.amazonaws.com/api/comments/${req.params.id}`)
     .then(function (response) {
       res.send(response.data);
     })
