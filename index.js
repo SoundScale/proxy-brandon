@@ -14,7 +14,10 @@ app.use(compression());
 
 app.use(cors());
 
-app.use(morgan('dev'));
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
