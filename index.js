@@ -1,12 +1,13 @@
-
+require('dotenv').config();
+require('newrelic');
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors')
 const axios = require('axios');
 const compression = require('compression')
+const bodyParser = require('body-parser')
 const port = 3000;
-
 const app = express();
 
 app.use(compression());
@@ -14,6 +15,13 @@ app.use(compression());
 app.use(cors());
 
 app.use(morgan('dev'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.get('/loaderio-*', (req, res) => {
+  res.status(200).send(process.env.LOADERIO)
+})
 
 app.use('/songs/:id', express.static('public'));
 
@@ -57,9 +65,20 @@ app.get('/relatedAlbums/:id', (req, res) => {
 });
 
 app.get('/api/stats/:id', (req, res) => {
-  axios.get(`http://server-env-1.phjpybupp3.us-west-1.elasticbeanstalk.com/api/stats/${req.params.id}`)
+  // axios.get(`http://127.0.0.1:3004/api/stats/${req.params.id}`)
+  axios.get(`http://sdc-load-balancer-1743830225.us-west-1.elb.amazonaws.com/api/stats/${req.params.id}`)
     .then(({ data }) => {
       res.json(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+})
+
+app.patch('/api/stats/:id', (req, res) => {
+  axios.patch(`http://127.0.0.1:3004/api/stats/${req.params.id}`, { body: req.body })
+    .then(({ data }) => {
+      res.status(204).end();
     })
     .catch((error) => {
       console.log(error);

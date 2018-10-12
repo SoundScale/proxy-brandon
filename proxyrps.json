@@ -1,0 +1,15 @@
+{
+    "config": {
+        "target": "http://localhost:3000",
+        "phases": [
+        {"duration": "300", "arrivalRate": 300}
+        ]
+    },
+    "scenarios": [
+        {
+        "flow": [
+            {"patch": {"url": "/api/stats/{{$randomNumber(1, 10000000)}}", "form": {"plays": 1}}}
+        ]
+        }
+    ]
+}   

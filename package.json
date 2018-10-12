@@ -11,11 +11,14 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "cors": "^2.8.4",
+    "dotenv": "^6.1.0",
     "express": "^4.16.2",
     "h5bp": "^0.1.4",
     "morgan": "^1.9.0",
+    "newrelic": "^4.9.0",
     "nodemon": "^1.18.4"
   }
 }
